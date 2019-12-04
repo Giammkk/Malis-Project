@@ -8,7 +8,7 @@ np.random.seed(1)
 
 #%% data preparation
 
-data = pd.read_csv("PRSA_data_2010.1.1-2014.12.31.csv")
+data = pd.read_csv("data.csv")
 data = data.dropna()
 
 head = data.head()
