@@ -53,3 +53,33 @@ class LLS(SolveMinProbl):
         y = self.y
         w = np.dot(np.dot(np.linalg.inv(np.dot(A.T, A)), A.T), y) # w=(A*AT)^-1*AT*y
         self.w = w
+
+class conjugateGrad(SolveMinProbl):
+    """Implementation of the Conjugate Gradient:
+        finds w that minimize ||y-Xw||^2
+    """
+    def run(self):
+        N=self.Np
+        self.err = np.zeros((N, 2), dtype = float)
+        A = self.x
+        Q = np.dot(A.T,A) #Q=A^T*A
+        y=self.y
+        b = (np.dot(A.T,y)) #b=A*y
+        w = np.zeros((self.Nf,1), dtype=float)
+        g = -b
+        d = b
+        b = np.array([b]).T
+        g = np.array([g]).T
+        d = np.array([d]).T
+        for it in range(self.Nf):
+            # alfa= d^T*b/(d^T*Q*d)
+            alfa = -np.dot(d.T,g)/np.dot(np.dot(d.T,Q),d)
+            w = w+alfa*d
+            g = g+alfa*np.dot(Q,d) # g=g+alfa*Q*d
+            # beta = g*Q*d/(d^T*Q*d)
+            beta = np.dot(np.dot(g.T,Q),d)/np.dot(np.dot(d.T,Q),d)
+            d = -g+beta*d
+            self.err[it,0] = it
+            self.err[it,1] = np.linalg.norm(np.dot(Q,w)-b)
+        self.sol = w
+        self.min = self.err[it, 1]

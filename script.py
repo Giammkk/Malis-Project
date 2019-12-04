@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 import convert_data as cd
-from minimization import LLS
+from minimization import *
 import utils as ut
 
-np.random.seed(1)
+#np.random.seed(1)
 
 #%% data preparation
 
@@ -51,10 +51,18 @@ lls = LLS(ytrain, xtrain)
 lls.run()
 lls.plot_w()
 yhat = lls.estimate(meany, stdy)
-error = lls.computeError(yhat, ytrain_notnorm)
+errorLLS = lls.computeError(yhat, ytrain_notnorm)
 
-# DEBUG
+#CHECK NORMALIZATION 
+
 #for i in range(xtrain.shape[1]):
-#    print(i, " ", np.sum(xtrain[:,i]))
+#    sum = np.sum(xtrain[:, i])
+#    std = np.std(xtrain[:, i])
+#    print(i , sum, std)
 
-#TODO check normalization
+#%% Conjugate Gradient 
+cg = conjugateGrad(ytrain, xtrain)
+cg.run()
+cg.plot_w()
+yhat = lls.estimate(meany, stdy)
+errorCG = lls.computeError(yhat, ytrain_notnorm)
