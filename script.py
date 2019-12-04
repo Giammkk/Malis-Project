@@ -7,7 +7,7 @@ import convert_data as cd
 from minimization import *
 import utils as ut
 
-#np.random.seed(1)
+np.random.seed(1)
 
 #%% data preparation
 
@@ -36,7 +36,7 @@ cbwd = cd.convertCBWD(cbwd, tot_data)
 
 x = np.concatenate((months, hours, cbwd, x), axis=1)
 
-np.random.shuffle(x)
+# np.random.shuffle(x)
 
 # divide the dataset in training (80%) and test (20%)
 xtrain = x[: int(0.8 * tot_data), :]
@@ -53,19 +53,12 @@ ytrain, meany, stdy = ut.normalize(ytrain)
 lls = LLS(ytrain, xtrain)
 lls.run()
 lls.plot_w()
-yhat = lls.estimate(meany, stdy)
-errorLLS = lls.computeError(yhat, ytrain_notnorm)
-
-#CHECK NORMALIZATION 
-
-#for i in range(xtrain.shape[1]):
-#    sum = np.sum(xtrain[:, i])
-#    std = np.std(xtrain[:, i])
-#    print(i , sum, std)
+yhatLLS_train = lls.estimate(meany, stdy)
+errorLLS_train = lls.computeError(yhatLLS_train, ytrain_notnorm)
 
 #%% Conjugate Gradient 
 cg = conjugateGrad(ytrain, xtrain)
 cg.run()
 cg.plot_w()
-yhat = lls.estimate(meany, stdy)
-errorCG = lls.computeError(yhat, ytrain_notnorm)
+yhatCG_train = cg.estimate(meany, stdy)
+errorCG_train = cg.computeError(yhatCG_train, ytrain_notnorm)
