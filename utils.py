@@ -22,12 +22,15 @@ def plotFeatures(x, y, name_features):
         plt.ylabel('PM2.5')
         plt.show()
 
-def plotCatFeatures(x,y,name_features):
+def plotCatFeatures(x, y, name_features):
+    color = ['b', 'r', 'g', 'y', 'c']
     plt.rcParams['figure.figsize'] = [9.5, 6]
     
-    plt.figure(f)
-    for f in range(len(x[0, :])):
-        plt.scatter(x[:,f], y)
-        plt.xlabel(name_features[f])
-        plt.ylabel('PM2.5')
-        plt.show()
+    plt.figure()
+    for f in range(len(name_features)):
+        xx = x[:,f]
+        plt.scatter(xx[xx==1]*f, y[xx==1], c=color[f])
+        
+    plt.xlabel(name_features)
+    plt.ylabel('PM2.5')
+    plt.show()

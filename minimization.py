@@ -32,7 +32,28 @@ class SolveMinProbl:
         mse = np.power(dif, 2)
         self.err = np.mean(mse)
         return self.err
-        
+    
+    def accuracy(self, yhat, y):
+        acc = 0
+        for i in range(len(yhat)):
+            a = self.classify(yhat.item(i))
+            b = self.classify(y.item(i))
+            
+            if a == b:
+                acc += 1
+                
+        return acc/len(yhat)
+    
+    def classify(self, n):
+        if n <= 50:
+            return 0
+        if n <= 100:
+            return 1
+        if n <= 150:
+            return 2
+        else:
+            return 4
+     
     def estimate(self, mean, std):
         yhat = np.dot(self.x, self.w)
         yhat = yhat * std
@@ -40,6 +61,19 @@ class SolveMinProbl:
         
         yhat = yhat + 0.5 
         return yhat.astype(int) # approx to integer
+    
+    def ploty(self, yhat, y):
+        plt.figure() 
+        plt.plot(range(len(y)), y, '.--r')
+        plt.plot(range(len(yhat)), yhat, '.--b')
+        plt.xlabel('features')
+        plt.ylabel('weight') 
+        plt.title('yhat (blue) vs y(red)') 
+        plt.grid() 
+        #fig = plt.gcf() # get a reference to the current figure
+        plt.show()
+        #fig.savefig('w.png', dpi=100) # save the figure in a file
+        return
     
     
 class LLS(SolveMinProbl):
