@@ -13,13 +13,13 @@ class SolveMinProbl:
         self.err = np.zeros((1,1), dtype=float)
         return
     
-    def plot_w(self, title='Weights'): # method to plot w
+    def plot_w(self, title=''): # method to plot w
         w = self.w
         n = np.arange(self.Nf)
         plt.figure() 
         plt.plot(n, w, '.--r')
         plt.xlabel('features')
-        plt.ylabel('w') 
+        plt.ylabel('weight') 
         plt.title(title) 
         plt.grid() 
         #fig = plt.gcf() # get a reference to the current figure
@@ -28,12 +28,9 @@ class SolveMinProbl:
         return
     
     def computeError(self, yhat, y):
-        A = self.x
-        
         dif = yhat - y
         mse = np.power(dif, 2)
         self.err = np.mean(mse)
-        
         return self.err
         
     def estimate(self, mean, std):
