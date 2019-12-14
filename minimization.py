@@ -1,6 +1,6 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
-
 class SolveMinProbl:
     def __init__(self, y, x): 
         self.x = x
