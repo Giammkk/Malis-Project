@@ -28,7 +28,7 @@ y = np.array(y)
 # plot data relations
 #ut.plotFeatures(data[name_features].values, y, name_features)
 
-x = data[['DEWP', 'TEMP', 'PRES', 'Iws', 'Is', 'Ir']].values # QUESTION: should we consider the year?
+x = data[['DEWP', 'TEMP', 'PRES', 'Iws', 'Is', 'Ir']].values 
 x = np.array(x)
 
 # converting categorical features
@@ -74,9 +74,9 @@ for i in [16,17,18]:
     print('num of zeros', i, nZeros)
     print('-'*5)
 
-xtrain[:,16] = np.reciprocal(xtrain[:,16])
-xtrain[:,17] = np.reciprocal(xtrain[:,17])
-xtrain[:,18] = np.reciprocal(xtrain[:,18])
+#xtrain[:,16] = np.reciprocal(xtrain[:,16]) #Iws
+#xtrain[:,17] = np.reciprocal(xtrain[:,17]) #Is
+#xtrain[:,18] = np.reciprocal(xtrain[:,18]) #Ir
 
 #for i in [16,17,18]:
 #    minimum = np.min(xtrain[:,i])
@@ -90,17 +90,17 @@ xtrain[:,18] = np.reciprocal(xtrain[:,18])
 
 #%% Square DEWP (13), TEMP (14), PRES (15)
     
-xtrain[:,13] = np.power(xtrain[:,13], 2)
-xtrain[:,14] = np.power(xtrain[:,14], 2)
-xtrain[:,15] = np.power(xtrain[:,15], 2)
+#xtrain[:,13] = np.power(xtrain[:,13], 2)
+#xtrain[:,14] = np.power(xtrain[:,14], 2)
+#xtrain[:,15] = np.power(xtrain[:,15], 2)
     
 #xtrain[:,13] = np.cbrt(xtrain[:,13])
 #xtrain[:,14] = np.cbrt(xtrain[:,14])
 #xtrain[:,15] = np.cbrt(xtrain[:,15])
     
-x13 = np.expand_dims( np.power(xtrain[:,13], 2), axis=1)
-x14 = np.expand_dims( np.power(xtrain[:,14], 2), axis=1)
-x15 = np.expand_dims( np.power(xtrain[:,15], 2), axis=1)
+#x13 = np.expand_dims( np.power(xtrain[:,13], 2), axis=1)
+#x14 = np.expand_dims( np.power(xtrain[:,14], 2), axis=1)
+#x15 = np.expand_dims( np.power(xtrain[:,15], 2), axis=1)
 
 #%%
 #xtrain = np.concatenate((x13, x14, x15, xtrain[:,13:16], xtrain[:, 16:19]), axis=1)

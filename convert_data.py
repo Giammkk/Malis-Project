@@ -30,10 +30,10 @@ def convertHours(hours, length):
         elif hours[i] in list(range(10,15)):
             x[i,1] = 1 # midday
             
-        elif hours[i] in list(range(16,19)):
+        elif hours[i] in list(range(15,19)):
             x[i,2] = 1 # afternoon
             
-        elif hours[i] in list(range(18,22)):
+        elif hours[i] in list(range(19,23)):
             x[i,3] = 1 # evening
             
         else:
