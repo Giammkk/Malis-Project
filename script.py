@@ -26,7 +26,7 @@ y = data[['pm2.5']].values
 y = np.array(y)
 
 # plot data relations
-#ut.plotFeatures(data[name_features].values, y, name_features)
+ut.plotFeatures(data[name_features].values, y, name_features)
 
 x = data[['DEWP', 'TEMP', 'PRES', 'Iws', 'Is', 'Ir']].values 
 x = np.array(x)
@@ -56,7 +56,7 @@ xtest = x[int(0.8 * tot_data + 1) :, :]
 ytrain_ = y[: int(0.8 * tot_data), :]
 ytest = y[int(0.8 * tot_data + 1) :, :]
 
-xtrain, meanx, stdx = ut.normalize(xtrain)
+# xtrain, meanx, stdx = ut.normalize(xtrain)
 
 ytrain = {}
 ytrain['notnormalized'] = ytrain_.copy()
@@ -74,19 +74,19 @@ ytrain['normalized'], meany, stdy = ut.normalize(ytrain_)
 #     print('num of zeros', i, nZeros)
 #     print('-'*5)
 
-#xtrain[:,16] = np.reciprocal(xtrain[:,16]) #Iws
-#xtrain[:,17] = np.reciprocal(xtrain[:,17]) #Is
-#xtrain[:,18] = np.reciprocal(xtrain[:,18]) #Ir
+xtrain[:,16] = np.log(xtrain[:,16]) #Iws
+# xtrain[:,17] = np.log(xtrain[:,17]) #Is
+# xtrain[:,18] = np.log(xtrain[:,18]) #Ir
 
-#for i in [16,17,18]:
-#    minimum = np.min(xtrain[:,i])
-#    maximum = np.max(xtrain[:,i])
-#    nZeros = np.count_nonzero(xtrain[:,i] == 0)
-#    
-#    print('min', i, minimum)
-#    print('max', i, maximum)
-#    print('n° zeros', i, nZeros)
-#    print('-'*5)
+# for i in [16,17,18]:
+#     minimum = np.min(xtrain[:,i])
+#     maximum = np.max(xtrain[:,i])
+#     nZeros = np.count_nonzero(xtrain[:,i] == 0)
+    
+#     print('min', i, minimum)
+#     print('max', i, maximum)
+#     print('n° zeros', i, nZeros)
+#     print('-'*5)
 
 #%% Square DEWP (13), TEMP (14), PRES (15)
     
@@ -98,20 +98,23 @@ ytrain['normalized'], meany, stdy = ut.normalize(ytrain_)
 #xtrain[:,14] = np.cbrt(xtrain[:,14])
 #xtrain[:,15] = np.cbrt(xtrain[:,15])
     
-#x13 = np.expand_dims( np.power(xtrain[:,13], 2), axis=1)
-#x14 = np.expand_dims( np.power(xtrain[:,14], 2), axis=1)
-#x15 = np.expand_dims( np.power(xtrain[:,15], 2), axis=1)
+x13 = np.expand_dims( np.power(xtrain[:,13], 2), axis=1)
+x14 = np.expand_dims( np.power(xtrain[:,14], 2), axis=1)
+x15 = np.expand_dims( np.power(xtrain[:,15], 2), axis=1)
 
 #%%
 #xtrain = np.concatenate((x13, x14, x15, xtrain[:,13:16], xtrain[:, 16:19]), axis=1)
-xtrain = np.concatenate((x13, x14, x15, xtrain), axis=1)
+xtrain = np.concatenate((xtrain, x13, x14, x15), axis=1)
+
+#%% Normalize data
+xtrain, meanx, stdx = ut.normalize(xtrain)
 
 #%% LLS
 lls = LLS(ytrain['normalized'], xtrain)
 lls.run()
 lls.plot_w('LLS')
 
-yhatLLS_train = lls.estimate(meany, stdy) + 1
+yhatLLS_train = lls.estimate(meany, stdy) 
 
 errorLLS_train = lls.computeError(yhatLLS_train, ytrain['notnormalized'])
 lls.ploty(yhatLLS_train, ytrain['notnormalized'])
@@ -124,8 +127,8 @@ cg.run()
 cg.plot_w('Conjugate Gradient')
 
 yhatCG_train = cg.estimate(meany, stdy)
-errorCG_train = cg.computeError(yhatCG_train, ytrain['notnormalized'])
 
+errorCG_train = cg.computeError(yhatCG_train, ytrain['notnormalized'])
 cg.ploty(yhatLLS_train, ytrain['notnormalized'])
 
 acc_cg = cg.accuracy(yhatLLS_train, ytrain['notnormalized'])

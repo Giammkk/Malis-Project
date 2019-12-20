@@ -5,8 +5,9 @@ import convert_data as cd
 from minimization import *
 import utils as ut
 from sklearn.linear_model import LogisticRegression
+from sklearn.decomposition import PCA
 
-# np.random.seed(1)
+np.random.seed(1)
 
 #%% data preparation
 
@@ -57,7 +58,7 @@ xtest = x[int(0.8 * tot_data + 1) :, :]
 ytrain_ = y[: int(0.8 * tot_data), :]
 ytest = y[int(0.8 * tot_data + 1) :, :]
 
-xtrain, meanx, stdx = ut.normalize(xtrain)
+# xtrain, meanx, stdx = ut.normalize(xtrain)
 
 ytrain = {}
 ytrain['notnormalized'] = ytrain_.copy()
@@ -73,19 +74,28 @@ ytrain['normalized'], meany, stdy = ut.normalize(ytrain_)
 #xtrain[:,14] = np.cbrt(xtrain[:,14])
 #xtrain[:,15] = np.cbrt(xtrain[:,15])
     
-x13 = np.expand_dims( np.power(xtrain[:,13], 2), axis=1)
-x14 = np.expand_dims( np.power(xtrain[:,14], 2), axis=1)
-x15 = np.expand_dims( np.power(xtrain[:,15], 2), axis=1)
+# x13 = np.expand_dims( np.power(xtrain[:,13], 2), axis=1)
+# x14 = np.expand_dims( np.power(xtrain[:,14], 2), axis=1)
+# x15 = np.expand_dims( np.power(xtrain[:,15], 2), axis=1)
 
-# xtrain = np.concatenate((x13, x14, x15, xtrain[:,13:16], xtrain[:, 16:19]), axis=1)
-xtrain = np.concatenate((x13, x14, x15, xtrain), axis=1)
+# xtrain = np.concatenate((xtrain, x13, x14, x15), axis=1)
 
 
 x13 = np.expand_dims( np.power(xtest[:,13], 2), axis=1)
 x14 = np.expand_dims( np.power(xtest[:,14], 2), axis=1)
 x15 = np.expand_dims( np.power(xtest[:,15], 2), axis=1)
 
-xtest = np.concatenate((x13, x14, x15, xtest), axis=1)
+xtest = np.concatenate((xtest, x13, x14, x15), axis=1)
+
+#%%
+xtrain, meanx, stdx = ut.normalize(xtrain)
+
+#%%
+pca = PCA(n_components=18)
+pca.fit(xtrain)
+eigenvalues = pca.singular_values_
+xtrain = pca.transform(xtrain)
+
 #%% Logistic Regression
 
 for i in range(len(ytrain['notnormalized'])):
@@ -93,11 +103,11 @@ for i in range(len(ytrain['notnormalized'])):
  
 labels = ytrain['notnormalized'].astype(int).ravel()
 logreg = LogisticRegression(max_iter=10e4, multi_class='multinomial', solver='lbfgs').fit(xtrain, labels)
-# aaa = logreg.predict(xtrain)
 score_train = logreg.score(xtrain, labels)
 
-for i in range(len(ytest)):
-    ytest[i] = ut.classify(ytest[i])
+
+# for i in range(len(ytest)):
+#     ytest[i] = ut.classify(ytest[i])
  
-labels = ytest.astype(int).ravel()
-score_test = logreg.score(xtest, labels)
+# labels = ytest.astype(int).ravel()
+# score_test = logreg.score(xtest, labels)

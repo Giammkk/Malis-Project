@@ -37,16 +37,7 @@ def plotCatFeatures(x, y, name_features):
     plt.show()
     
     
-def classify(n):
-    # if n <= 50:
-    #     return 0
-    # if n <= 100:
-    #     return 1
-    # if n <= 150:
-    #     return 2
-    # else:
-    #     return 3
-    
+def classify(n):    
     if n <= 35:
         return 0
     if n <= 150:
