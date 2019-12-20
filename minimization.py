@@ -1,6 +1,7 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import classify
+
 class SolveMinProbl:
     def __init__(self, y, x): 
         self.x = x
@@ -36,23 +37,15 @@ class SolveMinProbl:
     def accuracy(self, yhat, y):
         acc = 0
         for i in range(len(yhat)):
-            a = self.classify(yhat.item(i))
-            b = self.classify(y.item(i))
+            a = classify(yhat.item(i))
+            b = classify(y.item(i))
             
             if a == b:
                 acc += 1
+            # else:
+            #     print(yhat.item(i), y.item(i))
                 
         return acc/len(yhat)
-    
-    def classify(self, n):
-        if n <= 50:
-            return 0
-        if n <= 100:
-            return 1
-        if n <= 150:
-            return 2
-        else:
-            return 4
      
     def estimate(self, mean, std):
         yhat = np.dot(self.x, self.w)

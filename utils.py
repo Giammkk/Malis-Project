@@ -22,6 +22,7 @@ def plotFeatures(x, y, name_features):
         plt.ylabel('PM2.5')
         plt.show()
 
+
 def plotCatFeatures(x, y, name_features):
     color = ['b', 'r', 'g', 'y', 'c']
     plt.rcParams['figure.figsize'] = [9.5, 6]
@@ -34,3 +35,21 @@ def plotCatFeatures(x, y, name_features):
     plt.xlabel(name_features)
     plt.ylabel('PM2.5')
     plt.show()
+    
+    
+def classify(n):
+    # if n <= 50:
+    #     return 0
+    # if n <= 100:
+    #     return 1
+    # if n <= 150:
+    #     return 2
+    # else:
+    #     return 3
+    
+    if n <= 35:
+        return 0
+    if n <= 150:
+        return 1
+    else:
+        return 2
