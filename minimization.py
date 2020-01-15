@@ -45,7 +45,7 @@ class SolveMinProbl:
             # else:
             #     print(yhat.item(i), y.item(i))
                 
-        return acc/len(yhat)
+        return 100*acc/len(yhat)
      
     def estimate(self, mean, std):
         yhat = np.dot(self.x, self.w)
@@ -59,16 +59,23 @@ class SolveMinProbl:
         plt.figure() 
         plt.plot(range(len(y)), y, '.--r')
         plt.plot(range(len(yhat)), yhat, '.--b')
-        plt.xlabel('features')
-        plt.ylabel('weight') 
-        plt.title('yhat (blue) vs y(red)') 
+        plt.xlabel('sample')
+        plt.ylabel('y value') 
+        plt.title('yhat (blue) vs y (red)') 
         plt.grid() 
         #fig = plt.gcf() # get a reference to the current figure
         plt.show()
         #fig.savefig('w.png', dpi=100) # save the figure in a file
         return
     
-    
+    def test(self, ytest, xtest, mean, std):
+        yhat_test = np.dot(xtest, self.w)
+        yhat_test = yhat_test * std
+        yhat_test = yhat_test + mean
+        
+        yhat_test = yhat_test + 0.5 
+        return yhat_test.astype(int)
+        
 class LLS(SolveMinProbl):
     
     def run(self): 
