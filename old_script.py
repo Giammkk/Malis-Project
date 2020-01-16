@@ -119,16 +119,16 @@ xtrain, meanx, stdx = ut.normalize(xtrain)
 xtest, _, _ = ut.normalize(xtest)
 
 #%% LLS
-# lls = LLS(ytrain['normalized'], xtrain)
-# lls.run()
-# lls.plot_w('LLS')
+lls = LLS(ytrain['normalized'], xtrain)
+lls.run()
+lls.plot_w('LLS')
 
-# yhatLLS_train = lls.estimate(meany, stdy) 
+yhatLLS_train = lls.estimate(meany, stdy) 
 
-# errorLLS_train = lls.computeError(yhatLLS_train, ytrain['notnormalized'])
-# lls.ploty(yhatLLS_train, ytrain['notnormalized'])
+errorLLS_train = lls.computeError(yhatLLS_train, ytrain['notnormalized'])
+lls.ploty(yhatLLS_train, ytrain['notnormalized'])
 
-# acc_lls = lls.accuracy(yhatLLS_train, ytrain['notnormalized'])
+acc_lls = lls.accuracy(yhatLLS_train, ytrain['notnormalized'])
 
 #%% Conjugate Gradient 
 cg = conjugateGrad(ytrain['normalized'], xtrain)

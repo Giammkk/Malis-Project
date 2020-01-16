@@ -14,12 +14,13 @@ class SolveMinProbl:
         self.err = np.zeros((1,1), dtype=float)
         return
     
-    def plot_w(self, title=''): # method to plot w
+    def plot_w(self, title='', labels=[]): # method to plot w
         w = self.w
         n = np.arange(self.Nf)
         plt.figure() 
         plt.plot(n, w, '.--r')
         plt.xlabel('features')
+        plt.xticks(np.arange(len(labels)), labels)
         plt.ylabel('weight') 
         plt.title(title) 
         plt.grid() 
