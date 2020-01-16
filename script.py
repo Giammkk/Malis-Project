@@ -11,31 +11,31 @@ from sklearn.linear_model import LogisticRegression
 #%% data preparation
 
 data = pd.read_csv("Beijing_data.csv")
-# data = pd.read_csv("cities_data/ShanghaiPM20100101_20151231.csv")
-# data = pd.read_csv("cities_data/ShenyangPM20100101_20151231.csv")
-# data = pd.read_csv("cities_data/ChengduPM20100101_20151231.csv")
-# data = pd.read_csv("cities_data/BeijingPM20100101_20151231.csv")
+#data = pd.read_csv("cities_data/ShanghaiPM20100101_20151231.csv")
+#data = pd.read_csv("cities_data/ShenyangPM20100101_20151231.csv")
+#data = pd.read_csv("cities_data/ChengduPM20100101_20151231.csv")
+
 data = data.dropna()
 statistics = data.describe()
 
 name_features = data.columns.tolist()
 name_features.pop(0)
 name_features.remove('pm2.5')
-# name_features.remove('PM_US Post')
+#name_features.remove('PM_US Post') #for Shanghai, Shenyang, Chengdu datasets
 
 head = data.head()
 stats = data.describe()
 tot_data = len(data)
 
 y = data[['pm2.5']].values
-# y = data[['PM_US Post']].values
+#y = data[['PM_US Post']].values #for Shanghai, Shenyang, Chengdu datasets
 y = np.array(y)
 
 # plot data relations
 #ut.plotFeatures(data[name_features].values, y, name_features)
 
 x = data[['DEWP', 'TEMP', 'PRES', 'Iws', 'Is', 'Ir']].values
-# x = data[['DEWP', 'TEMP', 'PRES', 'HUMI', 'Iws', 'Iprec']].values
+#x = data[['DEWP', 'TEMP', 'PRES', 'HUMI', 'Iws', 'Iprec']].values #for Shanghai, Shenyang, Chengdu datasets
 day = data[['day']].values
 month = data[['month']].values
 x = np.array(x)
