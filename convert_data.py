@@ -43,7 +43,7 @@ def convertHours(hours, length):
 
 #%%
 def convertCBWD(cbwd, length):
-    x = np.zeros((length, 4))
+    x = np.zeros((length, 5))
     
     for i in range(length):
         if cbwd[i] == 'cv':
@@ -52,9 +52,11 @@ def convertCBWD(cbwd, length):
         elif cbwd[i] == 'NW':
             x[i,1] = 1
             
-        elif cbwd[i] =='NE':
+        elif cbwd[i] == 'NE':
             x[i,2] = 1
-            
+        
+        elif cbwd[i] == 'SW':
+            x[i,3] = 1
         else:
-            x[i,3] = 1 # SE
+            x[i,4] = 1 # SE
     return x
