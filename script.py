@@ -193,11 +193,11 @@ for d in datasets:
     #plot average weights for each dataset
     svp_average_weights = conjugateGrad(ytrain['normalized'], xtrain) #create a fake conjugate Gradient instance to plot the weights values over week for each dataset 
     svp_average_weights.w = means_dataset
-    plot_title = 'Average weights over weeks for ', cities_names[dataset_counter-1] , ' dataset'
-    if dataset_counter==1:
-        svp_average_weights.plot_w(plot_title, beijing_labels )
-    else: 
-        svp_average_weights.plot_w(plot_title, other_cities_labels )
+    plot_title = 'Average weights over weeks for '+cities_names[dataset_counter-1]+' dataset'
+    # if dataset_counter==1:
+    #     svp_average_weights.plot_w(plot_title, beijing_labels )
+    # else: 
+    #     svp_average_weights.plot_w(plot_title, other_cities_labels )
 
     
     print('CG')

@@ -20,10 +20,10 @@ class SolveMinProbl:
         plt.figure() 
         plt.plot(n, w, '.--r')
         plt.xlabel('features')
-        plt.xticks(np.arange(len(labels)), labels)
+        plt.xticks(np.arange(len(labels)), labels, rotation=90)
         plt.ylabel('weight') 
         plt.title(title) 
-        plt.grid() 
+        plt.grid()
         #fig = plt.gcf() # get a reference to the current figure
         plt.show()
         #fig.savefig('w.png', dpi=100) # save the figure in a file
