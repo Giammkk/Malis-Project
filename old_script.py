@@ -25,7 +25,6 @@ tot_data = len(data)
 
 y = data[['pm2.5']].values
 y = np.array(y)
-#y = y[:143]
 
 # plot data relations
 #ut.plotFeatures(data[name_features].values, y, name_features)
@@ -34,8 +33,6 @@ x = data[['DEWP', 'TEMP', 'PRES', 'Iws', 'Is', 'Ir']].values
 day = data[['day']].values
 month = data[['month']].values
 x = np.array(x)
-# x = x[:143, :]
-# 144 -> 311
 
 # converting categorical features
 months = data[['month']].values
@@ -52,6 +49,7 @@ cbwd = cd.convertCBWD(cbwd, tot_data)
 #ut.plotCatFeatures(cbwd, y, ['cv', 'NW', 'NE', 'SE'])
 
 x = np.concatenate((months, hours, cbwd, x), axis=1)
+x = np.delete(x, [12], axis=1)
 
 np.random.shuffle(x)
 
